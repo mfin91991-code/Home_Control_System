@@ -1,4 +1,4 @@
-name: Build Flutter Apps (Android & Windows)
+name: Build Apps
 
 on:
   push:
@@ -8,64 +8,30 @@ on:
 
 jobs:
   build-android:
-    name: Build Android APK
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-
-     - name: Install Dependencies
-        run: |
-          cd flutter_app
-          flutter pub get
-
-      - name: Build APK
-        run: |
-          cd flutter_app
-          flutter build apk --release
-
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v3
+      - run: flutter pub get
+      - run: flutter build apk --release
+      - uses: actions/upload-artifact@v3
         with:
-          name: Mobile-Android-APK
-          path: flutter_app/build/app/outputs/flutter-apk/app-release.apk
+          name: Android-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
 
   build-windows:
-    name: Build Windows EXE
-    runs-on: windows-latest
-    steps:
-      - uses: actions/chekout@v3
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+   runs-on: windows-latest
+   steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-
-      - name: Enable Windows Desktop
-        run: flutter config --enable-windows-desktop
-
-      - name: Install Dependencies
-        run: |
-          cd flutter_app
-          flutter pub get
-
-      - name: Build Windows Executable
-        run: |
-          cd flutter_app
-          flutter build windows
-
-      - name: Upload Windows Artifact
-        uses: actions/upload-artifact@v3
-       with:
-          name: Desktop-Windows-EXE
-          path: flutter_app/build/windows/x64/runner/Release/
+      - run: flutter config --enable-windows-desktop
+      - run: flutter pub get
+      - run: flutter build windows
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Windows-EXE
+          path: build/windows/x64/runner/Release/
