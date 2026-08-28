@@ -1,48 +1,39 @@
 name: Build Apps
 
-"on":
+on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: subosito/flutter-action@v2
         with:
-          channel: stable
-          cache: true
-
+          channel: 'stable'
+      - run: flutter create --platforms=android .
       - run: flutter pub get
       - run: flutter build apk --release
-
       - uses: actions/upload-artifact@v4
         with:
           name: Android-APK
-          path: build/app/outputs/flutter-apk/app-reease.apk
-          if-no-files-found: error
+          path: build/app/outpus/flutter-apk/app-release.apk
 
   build-windows:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: subosito/flutter-action@v2
         with:
-          channel: stable
-          cache: true
-
+          channel: 'stable'
+      - run: flutter create --platforms=windows .
+      - run: flutter config --enable-windows-desktop
       - run: flutter pub get
-      - run: flutter build windows --release
-
+      - run: flutter build windows
       - uses: actions/upload-artifact@v4
         with:
           name: Windows-EXE
           path: build/windows/x64/runner/Release/
-          if-no-files-found: error
