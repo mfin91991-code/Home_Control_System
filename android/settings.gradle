@@ -1,9 +1,7 @@
 pluginManagement {
     def flutterSdkPath = {
         def properties = new Properties()
-        file("local.properties").withInputStream {
-            properties.load(it)
-        }
+        file("local.properties").withInputStream { properties.load(it) }
 
         def flutterSdkPath = properties.getProperty("flutter.sdk")
 
@@ -17,8 +15,8 @@ pluginManagement {
     repositories {
         google()
         mavenCentral()
-        gralePluginPortal()
-    }
+        gradlePluginPortal()
+   }
 }
 
 plugins {
@@ -32,19 +30,16 @@ plugins {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
 
-    def storageUrl = System.getenv("FLUTTER_STORAGE_BASE_URL") ?: "https://storage.googleapis.com"
-
     repositories {
         google()
         mavenCentral()
 
-        // Flutter engine rtifacts
         maven {
-            url = uri("$storageUrl/download.flutter.io")
+            url = uri("https://storage.googleapis.com/download.flutter.io")
         }
     }
 }
 
-rootProject.name = "home_control_system"
+rootProject.name = "home_control_sytem"
 
 include ":app"
