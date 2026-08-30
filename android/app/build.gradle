@@ -6,6 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.home_control_system"
+
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -19,9 +20,11 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.examplehome_control_system"
+        applicationId = "com.exampl.home_control_system"
+
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
+
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
@@ -34,5 +37,5 @@ android {
 }
 
 flutter {
-    source "../.."
+    source = "../.."
 }
