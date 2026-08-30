@@ -1,9 +1,14 @@
 pluginManagement {
     def flutterSdkPath = {
         def properties = new Properties()
-        file("local.properties").withInputStream { properties.load(it) }
+        file("local.properties").withInputStream {
+            properties.load(it)
+        }
+
         def flutterSdkPath = properties.getProperty("flutter.sdk")
-        assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
+
+        assert flutterSdkPath != null : "flutter.sdk not set in local.properties"
+
         return flutterSdkPath
     }()
 
@@ -12,9 +17,9 @@ pluginManagement {
     repositories {
         google()
         mavenCentral()
-        gradlePluginPortal()
+        gralePluginPortal()
     }
-
+}
 
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
@@ -24,13 +29,17 @@ plugins {
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+
     repositories {
         google()
         mavenCentral()
+
         maven {
             url = uri("https://storage.googleapis.com/download.flutter.io")
         }
     }
 }
+
+rootProject.name  "home_control_system"
 
 include ":app"
