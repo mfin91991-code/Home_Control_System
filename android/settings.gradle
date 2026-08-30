@@ -1,7 +1,9 @@
 pluginManagement {
     def flutterSdkPath = {
         def properties = new Properties()
-        file("local.properties").withInputStream { properties.load(it) }
+        file("local.properties").withInputStream {
+            properties.load(it)
+        }
 
         def flutterSdkPath = properties.getProperty("flutter.sdk")
 
@@ -15,15 +17,13 @@ pluginManagement {
     repositories {
         google()
         mavenCentral()
-        gradlePluginPortal()
-   }
+        gralePluginPortal()
+    }
 }
 
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
-
     id "com.android.application" version "8.13.2" apply false
-
     id "org.jetbrains.kotlin.android" version "2.3.21" apply false
 }
 
@@ -40,6 +40,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "home_control_sytem"
+rootProject.name  "home_control_system"
 
 include ":app"
