@@ -1,39 +1,36 @@
-name: Build Apps
+name: Build App
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
-  build-android:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-      - run: flutter create --platforms=android .
-      - run: flutter pub get
-      - run: flutter build apk --release
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Android-APK
-          path: build/app/outpus/flutter-apk/app-release.apk
 
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.6'
           channel: 'stable'
-      - run: flutter create --platforms=windows .
-      - run: flutter config --enable-windows-desktop
-      - run: flutter pub get
-      - run: flutter build windows
-      - uses: actions/upload-artifact@v4
+
+      - name: Recreate Android Project Configuration        run: |
+          flutter create . --platforms=android,windows
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
-          name: Windows-EXE
-          path: build/windows/x64/runner/Release/
+          name: app-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
